@@ -1,0 +1,7 @@
+?   	rustdesk-control/cmd/fake-agent	[no test files]
+?   	rustdesk-control/cmd/rustdesk-control	[no test files]
+ok  	rustdesk-control/internal/control	(cached)
+?   	rustdesk-control/internal/fakeagent	[no test files]
+?   	rustdesk-control/migrations	[no test files]
+?   	rustdesk-control/scripts/browser	[no test files]
+?   	rustdesk-control/web	[no test files]

@@ -1,0 +1,26 @@
+
+> rustdesk-control-web@1.0.0 build
+> tsc --noEmit && vite build
+
+vite v7.3.6 building client environment for production...
+transforming...
+✓ 1491 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.41 kB │ gzip:   0.28 kB
+dist/assets/index-By5WZajn.css      0.84 kB │ gzip:   0.46 kB
+dist/assets/index-Wuolcmbk.js   1,169.51 kB │ gzip: 367.18 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 17.16s
+
+Running 1 test using 1 worker
+
+(node:388040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 e2e/control.spec.ts:2:1 › management workflow and responsive layout (6.5s)
+
+  1 passed (7.7s)

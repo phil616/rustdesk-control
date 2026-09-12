@@ -1,0 +1,16 @@
+Modified RustDesk Client — rustdesk-managed-client
+Modification date: 2026-09-12
+Based on RustDesk OSS 1.4.9, commit 6c578292e8ebbbec708b76986ba8c4bc7c509747.
+hbb_common base: 7e1c392c62d39c364127307cd408421dd5f8cfb0.
+
+This is a modified version, not an official RustDesk distribution.
+Adds a visible rustdesk-control management module for organization-owned or
+explicitly authorized devices: signed enrollment, server policy, managed
+permanent password, rotation and heartbeat. It does not modify hbbs/hbbr or
+remote desktop protocols. No second OS service is installed.
+
+Original RustDesk copyrights, LICENSE and AGPL notices remain applicable.
+Managed additions are provided under AGPL-3.0-only. Distributors must publish
+complete corresponding modified source (including hbb_common modifications,
+build scripts and notices) at RUSTDESK_MANAGED_SOURCE_URL shown in About.
+The separate Go control plane is not part of the upstream RustDesk module.

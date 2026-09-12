@@ -1,0 +1,399 @@
+   Compiling openssl v0.10.68
+    Checking openssl-sys v0.9.104
+   Compiling zstd-safe v7.1.0
+   Compiling native-tls v0.2.12
+    Checking zstd-sys v2.0.11+zstd.1.5.6
+    Checking gdk-pixbuf v0.18.5
+    Checking pango v0.18.3
+   Compiling libgit2-sys v0.14.2+1.5.1
+   Compiling zstd-safe v5.0.2+zstd.1.5.2
+   Compiling scrap v0.5.0 (/home/phil616/workspace/rustdesk-control/rustdesk-managed-client/libs/scrap)
+    Checking gdkx11-sys v0.18.0
+    Checking dart-sys v4.1.5
+    Checking slotmap v1.0.7
+    Checking serial v0.4.0
+    Checking libpulse-simple-sys v1.21.1
+   Compiling flutter_rust_bridge v1.80.1
+    Checking winapi v0.3.9
+    Checking rust-ini v0.18.0
+    Checking phf v0.11.3
+    Checking pbkdf2 v0.11.0
+    Checking zstd v0.13.1
+   Compiling git2 v0.16.1
+    Checking zstd v0.11.2+zstd.1.5.2
+    Checking threadpool v1.8.1
+    Checking nix v0.25.1
+    Checking nix v0.23.2
+    Checking x11-clipboard v0.9.2
+    Checking dasp_slice v0.11.0
+    Checking num-bigint v0.4.6
+    Checking gdkwayland-sys v0.18.0
+   Compiling hbb_common v0.1.0 (/home/phil616/workspace/rustdesk-control/rustdesk-managed-client/libs/hbb_common)
+    Checking xkbcommon-dl v0.4.2
+    Checking png v0.18.1
+    Checking event-listener v3.1.0
+    Checking dashmap v6.1.0
+    Checking wayland-protocols-plasma v0.3.3
+    Checking filedescriptor v0.8.2 (https://github.com/rustdesk-org/wezterm?branch=rustdesk%2Fpty_based_0.8.1#80174f80)
+    Checking enquote v1.1.0
+   Compiling auto_impl v1.3.0
+   Compiling pam-macros v0.0.3
+    Checking users v0.10.0
+    Checking fs2 v0.4.3
+    Checking instant v0.1.13
+    Checking debug-helper v0.3.13
+    Checking gdk v0.18.0
+    Checking constant_time_eq v0.1.5
+   Compiling flutter_rust_bridge_macros v1.82.6
+    Checking qrcodegen v1.8.0
+    Checking smol_str v0.2.2
+    Checking shell-words v1.1.0
+    Checking base32 v0.4.0
+    Checking constant_time_eq v0.2.6
+    Checking urlencoding v2.1.3
+    Checking qrcode-generator v4.1.9
+    Checking totp-rs v5.5.1
+    Checking zip v0.6.6
+    Checking cidr-utils v0.5.11
+    Checking kcp-sys v0.1.0 (https://github.com/rustdesk-org/kcp-sys#32a6c09f)
+    Checking pam v0.7.0 (https://github.com/rustdesk-org/pam#7bfd2551)
+    Checking wallpaper v3.2.0 (https://github.com/rustdesk-org/wallpaper.rs#ce4a0cd3)
+    Checking async-process v1.8.1
+    Checking dasp v0.11.0
+    Checking clipboard-master v4.0.0-beta.6 (https://github.com/rustdesk-org/clipboard-master#7762d74e)
+    Checking fontdb v0.23.0
+    Checking terminfo v0.8.0
+    Checking libpulse-simple-binding v2.28.1
+    Checking winit v0.30.9
+    Checking softbuffer v0.4.5
+    Checking nix v0.29.0
+    Checking magnum-opus v0.4.0 (https://github.com/rustdesk-org/magnum-opus#588c6e1f)
+   Compiling shadow-rs v0.21.0
+    Checking evdev v0.11.5 (https://github.com/rustdesk-org/evdev#cec616e3)
+    Checking stunclient v0.4.1
+    Checking rust-pulsectl v0.2.12 (https://github.com/rustdesk-org/pulsectl#aa34dde4)
+    Checking dbus-crossroads v0.5.2
+    Checking arboard v3.4.0 (https://github.com/rustdesk-org/arboard#c7d5781f)
+    Checking system_shutdown v4.0.1
+    Checking fon v0.6.0
+    Checking portable-pty v0.8.1 (https://github.com/rustdesk-org/wezterm?branch=rustdesk%2Fpty_based_0.8.1#80174f80)
+    Checking parity-tokio-ipc v0.7.3-6 (https://github.com/rustdesk-org/parity-tokio-ipc#d0ae39bf)
+    Checking ctrlc v3.4.4
+    Checking sciter-rs v0.5.57 (https://github.com/rustdesk-org/rust-sciter?branch=dyn#5322f3a7)
+    Checking repng v0.2.2
+    Checking termios v0.3.3
+    Checking errno v0.3.14
+    Checking default-net v0.14.1
+    Checking shutdown_hooks v0.1.0
+    Checking wol-rs v1.0.1
+    Checking sys-locale v0.3.1
+    Checking tokio-native-tls v0.3.1
+    Checking tungstenite v0.26.2
+   Compiling keepawake v0.4.3 (https://github.com/rustdesk-org/keepawake-rs#64d56858)
+    Checking hyper-tls v0.6.0
+    Checking reqwest v0.12.24
+    Checking tokio-tungstenite v0.26.2
+    Checking gtk v0.18.1
+    Checking managed-control-core v1.0.0 (/home/phil616/workspace/rustdesk-control/rustdesk-managed-client/src/managed_control)
+   Compiling rustdesk v1.4.9 (/home/phil616/workspace/rustdesk-control/rustdesk-managed-client)
+    Checking libxdo-sys v0.11.0 (/home/phil616/workspace/rustdesk-control/rustdesk-managed-client/libs/libxdo-sys-stub)
+    Checking clipboard v0.1.0 (/home/phil616/workspace/rustdesk-control/rustdesk-managed-client/libs/clipboard)
+warning: type `useconds_t` should have an upper camel case name
+  --> libs/libxdo-sys-stub/src/lib.rs:31:10
+   |
+31 | pub type useconds_t = c_uint;
+   |          ^^^^^^^^^^ help: convert the identifier to upper camel case: `UsecondsT`
+   |
+   = note: `#[warn(non_camel_case_types)]` (part of `#[warn(nonstandard_style)]`) on by default
+
+warning: `libxdo-sys` (lib) generated 1 warning
+    Checking libxdo v0.6.0
+    Checking enigo v0.0.14 (/home/phil616/workspace/rustdesk-control/rustdesk-managed-client/libs/enigo)
+warning: unused import: `tokio`
+  --> libs/scrap/src/wayland/pipewire.rs:26:69
+   |
+26 | use hbb_common::{bail, config, platform::linux::CMD_SH, serde_json, tokio, ResultType};
+   |                                                                     ^^^^^
+   |
+   = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: method `available_source_types` is never used
+  --> libs/scrap/src/wayland/screencast_portal.rs:26:8
+   |
+ 8 | pub trait OrgFreedesktopPortalScreenCast {
+   |           ------------------------------ method in this trait
+...
+26 |     fn available_source_types(&self) -> Result<u32, dbus::Error>;
+   |        ^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: trait `OrgFreedesktopPortalRequest` is never used
+ --> libs/scrap/src/wayland/request_portal.rs:8:11
+  |
+8 | pub trait OrgFreedesktopPortalRequest {
+  |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `2` is never read
+ --> libs/scrap/src/common/wayland.rs:9:49
+  |
+9 | pub struct Capturer(Display, Box<dyn Recorder>, Vec<u8>);
+  |            -------- field in this struct        ^^^^^^^
+  |
+  = help: consider removing this field
+
+warning: hiding a lifetime that's elided elsewhere is confusing
+   --> libs/scrap/src/wayland/pipewire.rs:510:25
+    |
+510 | pub fn get_portal(conn: &SyncConnection) -> Proxy<&SyncConnection> {
+    |                         ^^^^^^^^^^^^^^^     ^^^^^^^^^^^^^^^^^^^^^^
+    |                         |                   |     |
+    |                         |                   |     the same lifetime is elided here
+    |                         |                   the same lifetime is hidden here
+    |                         the lifetime is elided here
+    |
+    = help: the same lifetime is referred to in inconsistent ways, making the signature confusing
+    = note: `#[warn(mismatched_lifetime_syntaxes)]` on by default
+help: use `'_` for type paths
+    |
+510 | pub fn get_portal(conn: &SyncConnection) -> Proxy<'_, &SyncConnection> {
+    |                                                   +++
+
+warning: `scrap` (lib) generated 5 warnings (run `cargo fix --lib -p scrap` to apply 2 suggestions)
+    Checking libappindicator v0.9.0
+    Checking muda v0.17.1
+    Checking tao v0.25.0 (https://github.com/rustdesk-org/tao?branch=dev#288c219c)
+    Checking tray-icon v0.21.3 (https://github.com/tauri-apps/tray-icon#0a5835b0)
+error[E0583]: file not found for module `bridge_generated`
+  --> src/lib.rs:35:1
+   |
+35 | mod bridge_generated;
+   | ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: to create the module `bridge_generated`, create file "src/bridge_generated.rs" or "src/bridge_generated/mod.rs"
+   = note: if there is a `mod bridge_generated` elsewhere in the crate already, import it with `use crate::...` instead
+
+warning: unused import: `anyhow`
+ --> src/server/wayland.rs:2:29
+  |
+2 | use hbb_common::{allow_err, anyhow, platform::linux::DISTRO};
+  |                             ^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `crate::clipboard_file::*`
+  --> src/server/connection.rs:12:5
+   |
+12 | use crate::clipboard_file::*;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `is_installed`
+  --> src/common.rs:42:69
+   |
+42 |     ui_interface::{get_api_server as ui_get_api_server, get_option, is_installed, set_option},
+   |                                                                     ^^^^^^^^^^^^
+
+warning: unused imports: `Duration` and `path::PathBuf`
+  --> src/flutter_ffi.rs:26:5
+   |
+26 |     path::PathBuf,
+   |     ^^^^^^^^^^^^^
+...
+31 |     time::{Duration, SystemTime},
+   |            ^^^^^^^^
+
+warning: unused import: `bail`
+  --> src/ui_cm_interface.rs:14:16
+   |
+14 |     allow_err, bail,
+   |                ^^^^
+
+warning: use of deprecated function `hbb_common::whoami::hostname`: use `fallible::hostname()` instead
+    --> src/platform/linux.rs:1742:47
+     |
+1742 |                 .replace(&hbb_common::whoami::hostname(), "")
+     |                                               ^^^^^^^^
+     |
+     = note: `#[warn(deprecated)]` on by default
+
+warning: use of deprecated function `hbb_common::base64::encode`: Use Engine::encode
+   --> src/hbbs_http/sync.rs:187:52
+    |
+187 |                         hash = hbb_common::base64::encode(&res[..]);
+    |                                                    ^^^^^^
+
+error[E0277]: the trait bound `EventToUI: IntoIntoDart<_>` is not satisfied
+   --> src/flutter.rs:585:28
+    |
+585 |                     stream.add(EventToUI::Event(out.clone()));
+    |                            ^^^ unsatisfied trait bound
+    |
+help: the trait `IntoIntoDart<_>` is not implemented for `EventToUI`
+   --> src/flutter_ffi.rs:95:1
+    |
+ 95 | pub enum EventToUI {
+    | ^^^^^^^^^^^^^^^^^^
+    = help: the following other types implement trait `IntoIntoDart<D>`:
+              `()` implements `IntoIntoDart<()>`
+              `(A, B)` implements `IntoIntoDart<(AD, BD)>`
+              `(A, B, C)` implements `IntoIntoDart<(AD, BD, CD)>`
+              `(A, B, C, D)` implements `IntoIntoDart<(AD, BD, CD, DD)>`
+              `(A, B, C, D, E)` implements `IntoIntoDart<(AD, BD, CD, DD, ED)>`
+              `DartCObject` implements `IntoIntoDart<DartCObject>`
+              `DartOpaque` implements `IntoIntoDart<DartOpaque>`
+              `NaiveDateTime` implements `IntoIntoDart<NaiveDateTime>`
+            and 23 others
+note: required by a bound in `StreamSink::<T>::add`
+   --> /home/phil616/.cargo/registry/src/rsproxy.cn-e3de039b2554c837/flutter_rust_bridge-1.80.1/src/rust2dart.rs:139:12
+    |
+137 |     pub fn add<D: IntoDart>(&self, value: T) -> bool
+    |            --- required by a bound in this associated function
+138 |     where
+139 |         T: IntoIntoDart<D>,
+    |            ^^^^^^^^^^^^^^^ required by this bound in `StreamSink::<T>::add`
+
+error[E0277]: the trait bound `EventToUI: IntoIntoDart<_>` is not satisfied
+    --> src/flutter.rs:1233:24
+     |
+1233 |                 stream.add(EventToUI::Rgba(display));
+     |                        ^^^ unsatisfied trait bound
+     |
+help: the trait `IntoIntoDart<_>` is not implemented for `EventToUI`
+    --> src/flutter_ffi.rs:95:1
+     |
+  95 | pub enum EventToUI {
+     | ^^^^^^^^^^^^^^^^^^
+     = help: the following other types implement trait `IntoIntoDart<D>`:
+               `()` implements `IntoIntoDart<()>`
+               `(A, B)` implements `IntoIntoDart<(AD, BD)>`
+               `(A, B, C)` implements `IntoIntoDart<(AD, BD, CD)>`
+               `(A, B, C, D)` implements `IntoIntoDart<(AD, BD, CD, DD)>`
+               `(A, B, C, D, E)` implements `IntoIntoDart<(AD, BD, CD, DD, ED)>`
+               `DartCObject` implements `IntoIntoDart<DartCObject>`
+               `DartOpaque` implements `IntoIntoDart<DartOpaque>`
+               `NaiveDateTime` implements `IntoIntoDart<NaiveDateTime>`
+             and 23 others
+note: required by a bound in `StreamSink::<T>::add`
+    --> /home/phil616/.cargo/registry/src/rsproxy.cn-e3de039b2554c837/flutter_rust_bridge-1.80.1/src/rust2dart.rs:139:12
+     |
+ 137 |     pub fn add<D: IntoDart>(&self, value: T) -> bool
+     |            --- required by a bound in this associated function
+ 138 |     where
+ 139 |         T: IntoIntoDart<D>,
+     |            ^^^^^^^^^^^^^^^ required by this bound in `StreamSink::<T>::add`
+
+error[E0277]: the trait bound `EventToUI: IntoIntoDart<_>` is not satisfied
+    --> src/flutter.rs:1263:32
+     |
+1263 |                         stream.add(EventToUI::Texture(display, false));
+     |                                ^^^ unsatisfied trait bound
+     |
+help: the trait `IntoIntoDart<_>` is not implemented for `EventToUI`
+    --> src/flutter_ffi.rs:95:1
+     |
+  95 | pub enum EventToUI {
+     | ^^^^^^^^^^^^^^^^^^
+     = help: the following other types implement trait `IntoIntoDart<D>`:
+               `()` implements `IntoIntoDart<()>`
+               `(A, B)` implements `IntoIntoDart<(AD, BD)>`
+               `(A, B, C)` implements `IntoIntoDart<(AD, BD, CD)>`
+               `(A, B, C, D)` implements `IntoIntoDart<(AD, BD, CD, DD)>`
+               `(A, B, C, D, E)` implements `IntoIntoDart<(AD, BD, CD, DD, ED)>`
+               `DartCObject` implements `IntoIntoDart<DartCObject>`
+               `DartOpaque` implements `IntoIntoDart<DartOpaque>`
+               `NaiveDateTime` implements `IntoIntoDart<NaiveDateTime>`
+             and 23 others
+note: required by a bound in `StreamSink::<T>::add`
+    --> /home/phil616/.cargo/registry/src/rsproxy.cn-e3de039b2554c837/flutter_rust_bridge-1.80.1/src/rust2dart.rs:139:12
+     |
+ 137 |     pub fn add<D: IntoDart>(&self, value: T) -> bool
+     |            --- required by a bound in this associated function
+ 138 |     where
+ 139 |         T: IntoIntoDart<D>,
+     |            ^^^^^^^^^^^^^^^ required by this bound in `StreamSink::<T>::add`
+
+error[E0277]: the trait bound `EventToUI: IntoIntoDart<_>` is not satisfied
+    --> src/flutter.rs:1432:16
+     |
+1432 |         stream.add(EventToUI::Event("close".to_owned()));
+     |                ^^^ unsatisfied trait bound
+     |
+help: the trait `IntoIntoDart<_>` is not implemented for `EventToUI`
+    --> src/flutter_ffi.rs:95:1
+     |
+  95 | pub enum EventToUI {
+     | ^^^^^^^^^^^^^^^^^^
+     = help: the following other types implement trait `IntoIntoDart<D>`:
+               `()` implements `IntoIntoDart<()>`
+               `(A, B)` implements `IntoIntoDart<(AD, BD)>`
+               `(A, B, C)` implements `IntoIntoDart<(AD, BD, CD)>`
+               `(A, B, C, D)` implements `IntoIntoDart<(AD, BD, CD, DD)>`
+               `(A, B, C, D, E)` implements `IntoIntoDart<(AD, BD, CD, DD, ED)>`
+               `DartCObject` implements `IntoIntoDart<DartCObject>`
+               `DartOpaque` implements `IntoIntoDart<DartOpaque>`
+               `NaiveDateTime` implements `IntoIntoDart<NaiveDateTime>`
+             and 23 others
+note: required by a bound in `StreamSink::<T>::add`
+    --> /home/phil616/.cargo/registry/src/rsproxy.cn-e3de039b2554c837/flutter_rust_bridge-1.80.1/src/rust2dart.rs:139:12
+     |
+ 137 |     pub fn add<D: IntoDart>(&self, value: T) -> bool
+     |            --- required by a bound in this associated function
+ 138 |     where
+ 139 |         T: IntoIntoDart<D>,
+     |            ^^^^^^^^^^^^^^^ required by this bound in `StreamSink::<T>::add`
+
+warning: variable does not need to be mutable
+    --> src/flutter_ffi.rs:1045:9
+     |
+1045 |     let mut map: HashMap<String, String> = serde_json::from_str(&json).unwrap_or(HashMap::new());
+     |         ----^^^
+     |         |
+     |         help: remove this `mut`
+     |
+     = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+warning: variable does not need to be mutable
+   --> src/tray.rs:146:17
+    |
+146 |             let mut builder = TrayIconBuilder::new()
+    |                 ----^^^^^^^
+    |                 |
+    |                 help: remove this `mut`
+
+warning: variable does not need to be mutable
+  --> src/tray.rs:54:9
+   |
+54 |     let mut event_loop = EventLoopBuilder::new().build();
+   |         ----^^^^^^^^^^
+   |         |
+   |         help: remove this `mut`
+
+warning: value captured by `_tray_icon` is never read
+   --> src/tray.rs:162:29
+    |
+162 |                 Ok(tray) => _tray_icon = Arc::new(Mutex::new(Some(tray))),
+    |                             ^^^^^^^^^^
+    |
+    = help: did you mean to capture by reference instead?
+    = note: `#[warn(unused_assignments)]` (part of `#[warn(unused)]`) on by default
+
+warning: value assigned to `_tray_icon` is never read
+   --> src/tray.rs:162:29
+    |
+162 |                 Ok(tray) => _tray_icon = Arc::new(Mutex::new(Some(tray))),
+    |                             ^^^^^^^^^^
+    |
+    = help: maybe it is overwritten before being read?
+
+warning: variable does not need to be mutable
+   --> src/privacy_mode.rs:140:13
+    |
+140 |         let mut map: HashMap<&'static str, PrivacyModeCreator> = HashMap::new();
+    |             ----^^^
+    |             |
+    |             help: remove this `mut`
+
+Some errors have detailed explanations: E0277, E0583.
+For more information about an error, try `rustc --explain E0277`.
+warning: `rustdesk` (lib) generated 13 warnings
+error: could not compile `rustdesk` (lib) due to 5 previous errors; 13 warnings emitted

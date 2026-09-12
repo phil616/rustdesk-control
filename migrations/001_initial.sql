@@ -1,0 +1,11 @@
+CREATE TABLE admins (id INTEGER PRIMARY KEY CHECK(id=1), password_hash TEXT NOT NULL);
+CREATE TABLE admin_sessions (token_hash TEXT PRIMARY KEY, csrf TEXT NOT NULL, expires_at INTEGER NOT NULL);
+CREATE TABLE settings (id INTEGER PRIMARY KEY CHECK(id=1), id_server TEXT NOT NULL DEFAULT '', relay_server TEXT NOT NULL DEFAULT '', public_key TEXT NOT NULL DEFAULT '', policy_version INTEGER NOT NULL DEFAULT 1, updated_at INTEGER NOT NULL);
+INSERT INTO settings(id,updated_at) VALUES(1,unixepoch());
+CREATE TABLE devices (id INTEGER PRIMARY KEY, device_uuid TEXT NOT NULL UNIQUE, rustdesk_id TEXT NOT NULL, hostname TEXT NOT NULL, os TEXT NOT NULL, os_version TEXT NOT NULL, arch TEXT NOT NULL, rustdesk_version TEXT NOT NULL, managed_client_version TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','approved','rejected')), first_seen_at INTEGER NOT NULL, last_seen_at INTEGER NOT NULL, approved_at INTEGER, applied_policy_version INTEGER NOT NULL DEFAULT 0, applied_password_version INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
+CREATE INDEX devices_rustdesk_id ON devices(rustdesk_id);
+CREATE TABLE device_auth (device_id INTEGER PRIMARY KEY REFERENCES devices(id) ON DELETE CASCADE, ed25519_public_key BLOB NOT NULL, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
+CREATE TABLE device_credentials (device_id INTEGER PRIMARY KEY REFERENCES devices(id) ON DELETE CASCADE, password_version INTEGER NOT NULL, nonce BLOB NOT NULL, ciphertext BLOB NOT NULL, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL);
+CREATE TABLE agent_nonces (device_id INTEGER NOT NULL REFERENCES devices(id) ON DELETE CASCADE, nonce TEXT NOT NULL, expires_at INTEGER NOT NULL, PRIMARY KEY(device_id,nonce));
+CREATE INDEX agent_nonces_expiry ON agent_nonces(expires_at);
+CREATE TABLE audit_logs (id INTEGER PRIMARY KEY, timestamp INTEGER NOT NULL, admin TEXT NOT NULL, action TEXT NOT NULL, device INTEGER, metadata TEXT NOT NULL DEFAULT '{}');

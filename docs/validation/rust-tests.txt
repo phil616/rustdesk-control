@@ -1,0 +1,20 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.38s
+     Running unittests lib.rs (rustdesk-managed-client/src/managed_control/target/debug/deps/managed_control_core-28ad7c6af3e4cb2f)
+
+running 7 tests
+test auth::tests::canonical_vector ... ok
+test agent::tests::failed_password_is_not_acknowledged ... ok
+test api::tests::refuses_non_https ... ok
+test policy::tests::parses_and_compares_versions ... ok
+test policy::tests::rejects_invalid_policy ... ok
+test auth::tests::request_signing ... ok
+test storage::tests::identity_persists_and_only_one_holder ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests managed_control_core
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

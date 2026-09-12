@@ -1,0 +1,17 @@
+.codegraph/
+.cursor/
+web/node_modules/
+web/dist/
+bin/
+data/
+*.db
+*.db-shm
+*.db-wal
+.env
+
+rustdesk-managed-client/
+managed-client/core/target/
+web/test-results/
+web/playwright-report/
+
+dist/

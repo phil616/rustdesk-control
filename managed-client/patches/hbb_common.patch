@@ -1,0 +1,66 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index 6ad3012..8208a02 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -7,6 +7,7 @@ edition = "2018"
+ # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+ 
+ [features]
++managed-control = []
+ default = []
+ webrtc = ["dep:webrtc"]
+ 
+diff --git a/src/config.rs b/src/config.rs
+index 1391ed4..9bea096 100644
+--- a/src/config.rs
++++ b/src/config.rs
+@@ -1174,6 +1174,8 @@ impl Config {
+     }
+ 
+     pub fn is_disable_change_permanent_password() -> bool {
++        #[cfg(feature = "managed-control")]
++        if Self::get_option("disable-change-permanent-password") == "Y" { return true; }
+         BUILTIN_SETTINGS
+             .read()
+             .unwrap()
+@@ -1243,6 +1245,8 @@ impl Config {
+     }
+ 
+     pub fn get_option(k: &str) -> String {
++        #[cfg(feature = "managed-control")]
++        if k == "allow-insecure-tls-fallback" { return "N".into(); }
+         get_or(
+             &OVERWRITE_SETTINGS,
+             &CONFIG2.read().unwrap().options,
+@@ -1294,6 +1298,31 @@ impl Config {
+         if Self::is_disable_change_permanent_password() {
+             return false;
+         }
++        Self::set_permanent_password_inner(password)
++    }
++
++    // No IPC/CLI entry point: only the in-process authenticated management adapter uses this.
++    #[cfg(feature = "managed-control")]
++    pub fn set_managed_permanent_password(password: &str) -> bool {
++        if !Self::set_permanent_password_inner(password) { return false; }
++        let mut persisted = Self::load_::<Config>("");
++        if Self::validate_or_decrypt_permanent_password_storage(&mut persisted).is_err() { return false; }
++        let current = CONFIG.read().unwrap();
++        persisted.password == current.password && persisted.salt == current.salt
++    }
++
++    #[cfg(feature = "managed-control")]
++    pub fn preserve_managed_password(incoming: &mut Config) {
++        incoming.copy_managed_password_from(&CONFIG.read().unwrap());
++    }
++
++    #[cfg(feature = "managed-control")]
++    pub fn copy_managed_password_from(&mut self, source: &Config) {
++        self.password = source.password.clone();
++        self.salt = source.salt.clone();
++    }
++
++    fn set_permanent_password_inner(password: &str) -> bool {
+         let (preset_storage, preset_salt) = Self::get_preset_password_storage_and_salt();
+         if preset_permanent_password_storage_matches_plain(&preset_storage, &preset_salt, password)
+         {
