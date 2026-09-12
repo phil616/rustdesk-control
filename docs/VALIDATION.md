@@ -10,7 +10,8 @@
 - Playwright Chromium workflow passed: login, pending approval, password reveal/
   hide, rotation, server settings save and responsive desktop/mobile rendering.
   No JavaScript page errors; no localStorage/sessionStorage credential persistence.
-- Go executable built for Linux amd64 and Windows amd64 with CGO disabled.
+- Historical Go executable checks covered Linux/Windows amd64. Current release
+  scope is Linux amd64 control plane and Windows x64 desktop client only.
 - Rust management core: seven tests passed, including cross-language canonical
   vectors, signatures, invalid policy rejection, independent version comparison,
   persistence/single-instance lock, and failed password application not acknowledged.
@@ -34,21 +35,30 @@ were reported in this pass, but the overall compilation failed.
 Windows full check encountered a missing `x86_64-w64-mingw32-g++`. Flutter SDK is
 not available. Passing the standalone core does not type-check all upstream hooks.
 
-No Windows or Linux VM was installed/rebooted with the modified client. There is
+No Windows VM was installed/rebooted with the modified client. There is
 no real hbbs/hbbr deployment for end-to-end desktop authentication. Therefore
-TASK.md sections 59–63 (installation, reboot, actual ID/password remote login,
-offline control plane and real server migration) are **unverified**. Follow
+Windows installation, reboot, actual ID/password remote login, offline control
+plane and real server migration are **unverified**. Follow
 `ACCEPTANCE.md` before distribution.
 
 Platform-specific risks still requiring validation:
 
 - Windows service-account identity directory ACL and stable identity across session
   transitions; no dedicated Windows ACL mutation has been added.
-- Linux root/service -> user/session IPC synchronization, password hash persistence,
-  and acknowledgement timing relative to the active remote-control process.
 - Complete Flutter About rendering and native library packaging.
 - Full adapter compilation and regression checks with feature both enabled/disabled.
 
 The Go control plane and UI can be built and exercised independently. The client
 source, patches and tests are implementation deliverables, not a validated
 installation package. No production server or device was modified.
+
+## Web i18n update
+
+Added Simplified Chinese / English UI switching with browser-language detection,
+optional persisted preference, Ant Design locale and localized dates/errors/audit
+labels. The language preference is the only new Web Storage entry; credentials
+remain in component memory. Production build and three Playwright tests passed,
+including English regression, Chinese workflow/persistence/form preservation,
+and disabled-storage fallback. Historical Windows/Linux control-plane executables were rebuilt
+with the updated embedded UI; Windows control-plane builds are no longer a release target. See `validation/i18n-tests.txt` and
+`validation/chinese-mobile.png`.

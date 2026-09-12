@@ -63,4 +63,19 @@ h2.ant-typography {
   }
 }
 
-@media (max-width: 991px) { .content { padding-top: 54px; } }
+@media (max-width: 991px) {
+  .content {
+    padding-top: 54px;
+  }
+}
+
+.header {
+  gap: 12px;
+  line-height: normal;
+}
+.header-actions {
+  flex-shrink: 0;
+}
+.header > .ant-typography {
+  min-width: 0;
+}

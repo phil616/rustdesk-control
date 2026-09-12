@@ -40,29 +40,47 @@ import {
   Typography,
 } from "antd";
 import { api, Device, setCSRF } from "./api";
+import {
+  I18nProvider,
+  useI18n,
+  LanguageSwitcher,
+  type Translate,
+} from "./i18n";
+import enUS from "antd/locale/en_US";
+import zhCN from "antd/locale/zh_CN";
 import "./style.css";
 const client = new QueryClient({
   defaultOptions: { queries: { retry: false, refetchOnWindowFocus: false } },
 });
-const date = (v: number) => new Date(v * 1000).toLocaleString();
+
+function SourceLinks() {
+  const { t } = useI18n();
+  return (
+    <Space wrap>
+      <a href="/source.tar.gz" download>
+        {t("Source code")}
+      </a>
+      <a href="/LICENSE">AGPL-3.0</a>
+      <a href="/THIRD-PARTY-NOTICES.txt">{t("Third-party licenses")}</a>
+    </Space>
+  );
+}
 function ErrorBox({ error }: { error: unknown }) {
+  const { errorText } = useI18n();
   return error ? (
-    <Alert
-      type="error"
-      showIcon
-      message={String(error instanceof Error ? error.message : error)}
-    />
+    <Alert type="error" showIcon message={errorText(error)} />
   ) : null;
 }
 function Login() {
+  const { t } = useI18n();
   const nav = useNavigate();
   const [error, setError] = useState<unknown>();
   const [busy, setBusy] = useState(false);
   return (
     <div className="login">
-      <Card title="rustdesk-control">
+      <Card title="rustdesk-control" extra={<LanguageSwitcher />}>
         <Typography.Paragraph type="secondary">
-          Sign in to your device management workspace.
+          {t("Sign in to your device management workspace.")}
         </Typography.Paragraph>
         <ErrorBox error={error} />
         <Form
@@ -83,20 +101,22 @@ function Login() {
         >
           <Form.Item
             name="password"
-            label="Administrator password"
+            label={t("Administrator password")}
             rules={[{ required: true }]}
           >
             <Input.Password autoComplete="current-password" />
           </Form.Item>
           <Button type="primary" htmlType="submit" block loading={busy}>
-            Sign in
+            {t("Sign in")}
           </Button>
         </Form>
+        <SourceLinks />
       </Card>
     </div>
   );
 }
 function Shell() {
+  const { t, errorText } = useI18n();
   const location = useLocation();
   const nav = useNavigate();
   const { message } = App.useApp();
@@ -113,7 +133,7 @@ function Shell() {
     <Layout className="shell">
       <Layout.Sider breakpoint="lg" collapsedWidth="0" width={230}>
         <div className="brand">
-          rustdesk-control<small>DEVICE MANAGEMENT</small>
+          rustdesk-control<small>{t("DEVICE MANAGEMENT")}</small>
         </div>
         <Menu
           theme="dark"
@@ -122,7 +142,7 @@ function Shell() {
             (p) => ({
               key: "/" + p,
               label: (
-                <Link to={"/" + p}>{p[0].toUpperCase() + p.slice(1)}</Link>
+                <Link to={"/" + p}>{t(p[0].toUpperCase() + p.slice(1))}</Link>
               ),
             }),
           )}
@@ -130,75 +150,83 @@ function Shell() {
       </Layout.Sider>
       <Layout>
         <Layout.Header className="header">
-          <Typography.Text>Organization workspace</Typography.Text>
-          <Button
-            onClick={async () => {
-              try {
-                await api("/logout", "POST");
-                setCSRF("");
-                client.clear();
-                nav("/login");
-              } catch (e) {
-                message.error(String(e));
-              }
-            }}
-          >
-            Sign out
-          </Button>
+          <Typography.Text>{t("Organization workspace")}</Typography.Text>
+          <Space className="header-actions">
+            <LanguageSwitcher />
+            <Button
+              onClick={async () => {
+                try {
+                  await api("/logout", "POST");
+                  setCSRF("");
+                  client.clear();
+                  nav("/login");
+                } catch (e) {
+                  message.error(errorText(e));
+                }
+              }}
+            >
+              {t("Sign out")}
+            </Button>
+          </Space>
         </Layout.Header>
         <Layout.Content className="content">
           <Outlet />
         </Layout.Content>
+        <Layout.Footer>
+          <SourceLinks />
+        </Layout.Footer>
       </Layout>
     </Layout>
   );
 }
-const columns = [
+const columns = (t: Translate, date: (value: number) => string) => [
   {
     title: "RustDesk ID",
     dataIndex: "rustdesk_id",
     render: (v: string, d: Device) => (
-      <Link to={"/devices/" + d.id}>{v || "Waiting for ID"}</Link>
+      <Link to={"/devices/" + d.id}>{v || t("Waiting for ID")}</Link>
     ),
   },
-  { title: "Hostname", dataIndex: "hostname" },
-  { title: "OS", dataIndex: "os" },
-  { title: "RustDesk version", dataIndex: "rustdesk_version" },
-  { title: "Managed client", dataIndex: "managed_client_version" },
+  { title: t("Hostname"), dataIndex: "hostname" },
+  { title: t("OS"), dataIndex: "os" },
+  { title: t("RustDesk version"), dataIndex: "rustdesk_version" },
+  { title: t("Managed client"), dataIndex: "managed_client_version" },
   {
-    title: "Status",
+    title: t("Status"),
     dataIndex: "online",
     render: (v: boolean) => (
-      <Tag color={v ? "green" : "default"}>{v ? "Online" : "Offline"}</Tag>
+      <Tag color={v ? "green" : "default"}>
+        {v ? t("Online") : t("Offline")}
+      </Tag>
     ),
   },
   {
-    title: "Approval",
+    title: t("Approval"),
     dataIndex: "status",
     render: (v: string) => (
       <Tag
         color={v === "approved" ? "blue" : v === "pending" ? "orange" : "red"}
       >
-        {v}
+        {t(v)}
       </Tag>
     ),
   },
   {
-    title: "Password",
+    title: t("Password"),
     render: (_: unknown, d: Device) =>
       d.status === "approved" ? (
         <Tag color={d.password_synced ? "green" : "orange"}>
-          {d.password_synced ? "Synced" : "Pending"}
+          {d.password_synced ? t("Synced") : t("Pending")}
         </Tag>
       ) : (
         "—"
       ),
   },
-  { title: "Last seen", dataIndex: "last_seen_at", render: date },
+  { title: t("Last seen"), dataIndex: "last_seen_at", render: date },
   {
-    title: "Actions",
+    title: t("Actions"),
     render: (_: unknown, d: Device) => (
-      <Link to={"/devices/" + d.id}>Details</Link>
+      <Link to={"/devices/" + d.id}>{t("Details")}</Link>
     ),
   },
 ];
@@ -209,6 +237,7 @@ function Devices({
   approvals?: boolean;
   recent?: boolean;
 }) {
+  const { t, date } = useI18n();
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("");
   const [online, setOnline] = useState("");
@@ -231,19 +260,21 @@ function Devices({
       {!recent && (
         <div>
           <Typography.Title level={2}>
-            {approvals ? "Pending approvals" : "Devices"}
+            {approvals ? t("Pending approvals") : t("Devices")}
           </Typography.Title>
           <Typography.Text type="secondary">
             {approvals
-              ? "Review new installations before assigning managed access."
-              : "Inventory and synchronization status. Updated every 15 seconds."}
+              ? t("Review new installations before assigning managed access.")
+              : t(
+                  "Inventory and synchronization status. Updated every 15 seconds.",
+                )}
           </Typography.Text>
         </div>
       )}
       {!recent && (
         <Space wrap>
           <Input.Search
-            placeholder="Search ID or hostname"
+            placeholder={t("Search ID or hostname")}
             allowClear
             onSearch={(v) => {
               setSearch(v);
@@ -252,21 +283,21 @@ function Devices({
             style={{ width: 260 }}
           />
           <Select
-            aria-label="Online status"
+            aria-label={t("Online status")}
             value={online}
             onChange={(v) => {
               setOnline(v);
               setPage(1);
             }}
             options={[
-              { value: "", label: "All connectivity" },
-              { value: "true", label: "Online" },
-              { value: "false", label: "Offline" },
+              { value: "", label: t("All connectivity") },
+              { value: "true", label: t("Online") },
+              { value: "false", label: t("Offline") },
             ]}
           />
           {!approvals && (
             <Select
-              aria-label="Approval status"
+              aria-label={t("Approval status")}
               value={status}
               onChange={(v) => {
                 setStatus(v);
@@ -274,7 +305,7 @@ function Devices({
               }}
               options={["", "pending", "approved", "rejected"].map((v) => ({
                 value: v,
-                label: v || "All approvals",
+                label: v ? t(v) : t("All approvals"),
               }))}
             />
           )}
@@ -284,7 +315,7 @@ function Devices({
       <Table
         rowKey="id"
         loading={data.isPending}
-        columns={columns}
+        columns={columns(t, date)}
         dataSource={data.data?.items}
         scroll={{ x: 1450 }}
         pagination={
@@ -306,6 +337,7 @@ function Devices({
   );
 }
 function Dashboard() {
+  const { t } = useI18n();
   const q = useQuery({
     queryKey: ["dashboard"],
     queryFn: () => api("/dashboard"),
@@ -314,9 +346,9 @@ function Dashboard() {
   return (
     <Space direction="vertical" size="large" className="full">
       <div>
-        <Typography.Title level={2}>Dashboard</Typography.Title>
+        <Typography.Title level={2}>{t("Dashboard")}</Typography.Title>
         <Typography.Text type="secondary">
-          A clear view of your managed fleet.
+          {t("A clear view of your managed fleet.")}
         </Typography.Text>
       </div>
       <ErrorBox error={q.error} />
@@ -330,12 +362,12 @@ function Dashboard() {
         ].map(([k, v]) => (
           <Col xs={24} sm={12} xl={4} key={k}>
             <Card>
-              <Statistic title={v} value={q.data?.[k] ?? "—"} />
+              <Statistic title={t(v)} value={q.data?.[k] ?? "—"} />
             </Card>
           </Col>
         ))}
       </Row>
-      <Card title="Recently seen devices">
+      <Card title={t("Recently seen devices")}>
         <Devices recent />
       </Card>
     </Space>
@@ -346,6 +378,7 @@ function DetailRoute() {
   return <Detail key={id} />;
 }
 function Detail() {
+  const { t, date, errorText } = useI18n();
   const { id } = useParams();
   const active = useRef(true);
   useEffect(() => {
@@ -384,11 +417,11 @@ function Detail() {
         "/devices/" + id + (action === "delete" ? "" : "/" + action),
         action === "delete" ? "DELETE" : "POST",
       );
-      message.success("Device updated");
+      message.success(t("Device updated"));
       qc.invalidateQueries();
       if (action === "delete") nav("/devices");
     } catch (e) {
-      message.error(String(e));
+      message.error(errorText(e));
     } finally {
       setBusy(false);
     }
@@ -398,7 +431,7 @@ function Detail() {
   const d = q.data;
   return (
     <Space direction="vertical" size="large" className="full">
-      <Link to="/devices">← Devices</Link>
+      <Link to="/devices">{t("\u2190 Devices")}</Link>
       <Typography.Title level={2}>{d.hostname}</Typography.Title>
       <ErrorBox error={q.error} />
       <Space wrap>
@@ -411,13 +444,17 @@ function Detail() {
         ].map((a) => (
           <Popconfirm
             key={a}
-            title={"Confirm " + a.replaceAll("-", " ") + "?"}
+            title={t("Confirm {action}?", { action: t(a) })}
             description={
               a === "reset-identity"
-                ? "The next signed enrollment can claim this UUID and will require approval."
+                ? t(
+                    "The next signed enrollment can claim this UUID and will require approval.",
+                  )
                 : a === "reject"
-                  ? "Stops future credential delivery. The existing offline password remains on the device."
-                  : "This action changes the managed device."
+                  ? t(
+                      "Stops future credential delivery. The existing offline password remains on the device.",
+                    )
+                  : t("This action changes the managed device.")
             }
             onConfirm={() => act(a)}
           >
@@ -429,10 +466,7 @@ function Detail() {
                 (a === "approve" && d.status === "approved")
               }
             >
-              {a
-                .split("-")
-                .map((s) => s[0].toUpperCase() + s.slice(1))
-                .join(" ")}
+              {t(a)}
             </Button>
           </Popconfirm>
         ))}
@@ -445,19 +479,25 @@ function Detail() {
             .filter(([k]) => k !== "id")
             .map(([k, v]) => ({
               key: k,
-              label: k.replaceAll("_", " "),
-              children: k.endsWith("_at") ? date(v as number) : String(v),
+              label: t(k),
+              children: k.endsWith("_at")
+                ? date(v as number)
+                : typeof v === "boolean"
+                  ? t(v ? "Yes" : "No")
+                  : k === "status"
+                    ? t(String(v))
+                    : String(v),
             }))}
         />
       </Card>
-      <Card title="Managed access">
+      <Card title={t("Managed access")}>
         <Space direction="vertical">
           <Typography.Text>
-            Policy:{" "}
+            {t("Policy")}:{" "}
             {d.applied_policy_version === settings.data?.policy_version
-              ? "Synced"
-              : "Pending"}{" "}
-            · Password {d.password_synced ? "synced" : "pending"}
+              ? t("Synced")
+              : t("Pending")}{" "}
+            · {t("Password")} {t(d.password_synced ? "Synced" : "Pending")}
           </Typography.Text>
           <Typography.Text copyable={{ text: d.rustdesk_id }}>
             RustDesk ID: {d.rustdesk_id}
@@ -473,32 +513,35 @@ function Detail() {
                   const data = await api("/devices/" + id + "/credential");
                   if (active.current) setSecret(data.password);
                 } catch (e) {
-                  message.error(String(e));
+                  message.error(errorText(e));
                 } finally {
                   setBusy(false);
                 }
               }}
             >
-              Reveal Password
+              {t("Reveal Password")}
             </Button>
             <Button
               disabled={!secret}
               onClick={async () => {
                 try {
                   await navigator.clipboard.writeText(secret);
-                  message.success("Password copied");
+                  message.success(t("Password copied"));
                 } catch {
-                  message.error("Clipboard access unavailable");
+                  message.error(t("Clipboard access unavailable"));
                 }
               }}
             >
-              Copy Password
+              {t("Copy Password")}
             </Button>
-            {secret && <Button onClick={() => setSecret("")}>Hide</Button>}
+            {secret && (
+              <Button onClick={() => setSecret("")}>{t("Hide")}</Button>
+            )}
           </Space>
           <Typography.Text type="secondary">
-            Connect using a normal RustDesk client. Credentials are never
-            included in connection URLs.
+            {t(
+              "Connect using a normal RustDesk client. Credentials are never included in connection URLs.",
+            )}
           </Typography.Text>
         </Space>
       </Card>
@@ -506,6 +549,7 @@ function Detail() {
   );
 }
 function Settings() {
+  const { t, errorText } = useI18n();
   const q = useQuery({
     queryKey: ["settings"],
     queryFn: () => api("/settings/rustdesk"),
@@ -519,17 +563,19 @@ function Settings() {
   }, [q.data, form]);
   return (
     <Space direction="vertical" size="large" className="full">
-      <Typography.Title level={2}>Settings</Typography.Title>
+      <Typography.Title level={2}>{t("Settings")}</Typography.Title>
       <ErrorBox error={q.error} />
       <Card
-        title={
-          "RustDesk OSS server · Policy " + (q.data?.policy_version ?? "—")
-        }
+        title={t("RustDesk OSS server · Policy {version}", {
+          version: q.data?.policy_version ?? "—",
+        })}
       >
         <Alert
           type="info"
           showIcon
-          message="This configuration will be distributed to all managed devices."
+          message={t(
+            "This configuration will be distributed to all managed devices.",
+          )}
         />
         <Form
           form={form}
@@ -539,9 +585,9 @@ function Settings() {
             try {
               await api("/settings/rustdesk", "PUT", { ...v, api_server: "" });
               client.invalidateQueries({ queryKey: ["settings"] });
-              message.success("Configuration saved");
+              message.success(t("Configuration saved"));
             } catch (e) {
-              message.error(String(e));
+              message.error(errorText(e));
             } finally {
               setBusy(false);
             }
@@ -549,27 +595,27 @@ function Settings() {
         >
           <Form.Item
             name="id_server"
-            label="ID Server"
+            label={t("ID Server")}
             rules={[{ required: true }]}
           >
             <Input placeholder="rustdesk.example.com" />
           </Form.Item>
-          <Form.Item name="relay_server" label="Relay Server">
+          <Form.Item name="relay_server" label={t("Relay Server")}>
             <Input placeholder="rustdesk.example.com" />
           </Form.Item>
           <Form.Item
             name="key"
-            label="RustDesk Public Key"
+            label={t("RustDesk Public Key")}
             rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
           <Button type="primary" htmlType="submit" loading={busy}>
-            Save configuration
+            {t("Save configuration")}
           </Button>
         </Form>
       </Card>
-      <Card title="Change administrator password">
+      <Card title={t("Change administrator password")}>
         <Form
           layout="vertical"
           onFinish={async (v) => {
@@ -577,29 +623,29 @@ function Settings() {
               await api("/password", "PUT", v);
               client.clear();
               setCSRF("");
-              message.success("Password changed. Sign in again.");
+              message.success(t("Password changed. Sign in again."));
               nav("/login");
             } catch (e) {
-              message.error(String(e));
+              message.error(errorText(e));
             }
           }}
         >
           <Form.Item
             name="current_password"
-            label="Current password"
+            label={t("Current password")}
             rules={[{ required: true }]}
           >
             <Input.Password autoComplete="current-password" />
           </Form.Item>
           <Form.Item
             name="new_password"
-            label="New password"
+            label={t("New password")}
             rules={[{ required: true, min: 12 }]}
           >
             <Input.Password autoComplete="new-password" />
           </Form.Item>
           <Button htmlType="submit">
-            Change password and end all sessions
+            {t("Change password and end all sessions")}
           </Button>
         </Form>
       </Card>
@@ -607,6 +653,7 @@ function Settings() {
   );
 }
 function Audit() {
+  const { t, date } = useI18n();
   const [page, setPage] = useState(1);
   const q = useQuery({
     queryKey: ["audit", page],
@@ -615,7 +662,7 @@ function Audit() {
   });
   return (
     <Space direction="vertical" size="large" className="full">
-      <Typography.Title level={2}>Audit log</Typography.Title>
+      <Typography.Title level={2}>{t("Audit log")}</Typography.Title>
       <ErrorBox error={q.error} />
       <Table
         rowKey="id"
@@ -623,10 +670,14 @@ function Audit() {
         dataSource={q.data?.items}
         scroll={{ x: 700 }}
         columns={[
-          { title: "Time", dataIndex: "timestamp", render: date },
-          { title: "Administrator", dataIndex: "admin" },
-          { title: "Action", dataIndex: "action" },
-          { title: "Device", dataIndex: "device" },
+          { title: t("Time"), dataIndex: "timestamp", render: date },
+          { title: t("Administrator"), dataIndex: "admin" },
+          {
+            title: t("Action"),
+            dataIndex: "action",
+            render: (value: string) => t(value),
+          },
+          { title: t("Device"), dataIndex: "device" },
         ]}
         pagination={{
           current: page,
@@ -639,9 +690,12 @@ function Audit() {
     </Space>
   );
 }
-createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+function Root() {
+  const { language } = useI18n();
+  return (
     <ConfigProvider
+      button={{ autoInsertSpace: false }}
+      locale={language === "zh-CN" ? zhCN : enUS}
       theme={{
         token: {
           colorPrimary: "#176f86",
@@ -676,5 +730,12 @@ createRoot(document.getElementById("root")!).render(
         </QueryClientProvider>
       </App>
     </ConfigProvider>
+  );
+}
+createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <I18nProvider>
+      <Root />
+    </I18nProvider>
   </React.StrictMode>,
 );

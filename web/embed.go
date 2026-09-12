@@ -23,7 +23,7 @@ func Handler() http.Handler {
 			p = "index.html"
 		}
 		if _, e := fs.Stat(root, p); e != nil {
-			if strings.HasPrefix(p, "assets/") {
+			if strings.HasPrefix(p, "assets/") || p == "source.tar.gz" || p == "LICENSE" || p == "THIRD-PARTY-NOTICES.txt" {
 				http.NotFound(w, r)
 				return
 			}

@@ -43,13 +43,14 @@ the script clones and patches the exact baseline itself.
 
 ```powershell
 Set-Location C:\src\rustdesk-control
-$env:RUSTDESK_CONTROL_URL = 'https://control.example.com'
-$env:RUSTDESK_MANAGED_SOURCE_URL = 'https://source.example.com/your-modified-client'
+$env:RUSTDESK_CONTROL_URL = 'https://rustdesk-control.altasci.com'
+$env:RUSTDESK_MANAGED_SOURCE_URL = 'https://github.com/phil616/rustdesk-control'
 $env:LIBCLANG_PATH = 'C:\Program Files\LLVM\bin'
 .\scripts\build-client.ps1 -VcpkgRoot C:\src\vcpkg
 ```
 
-Replace both example URLs. The control origin is compiled into the client and
+Both URLs above are literal defaults in the script and GitHub Actions; setting
+them explicitly is optional. Override them for another deployment. The control origin is compiled into the client and
 cannot be supplied later through ordinary UI. It must serve the deployed Go
 control plane over valid HTTPS. The source URL must publish corresponding
 modified client source when distributing the binary; it is shown in About.
@@ -67,10 +68,10 @@ Successful output:
 
 ```text
 dist/windows-x64/rustdesk-managed-1.4.9-x86_64-install.exe
-dist/windows-x64/rustdesk-managed-1.4.9-x86_64-bundle.zip
 ```
 
-The EXE contains the Flutter bundle. Launch it and use RustDesk's normal **Install**
+The EXE contains the Flutter bundle, license notices and expanded modified source
+archive. See [LICENSING.md](LICENSING.md) for extraction and distribution duties. Launch it and use RustDesk's normal **Install**
 action, accepting the normal UAC prompt. The management agent requires the
 installed RustDesk service running as LocalSystem; merely running the portable
 UI does not enroll. Do not copy only the `rustdesk.exe` from the uncompressed
@@ -79,11 +80,11 @@ bundle: it needs its DLLs and `data` directory.
 Before installing, deploy the control plane and save ID Server / Relay / Public
 Key in Settings. After installation, approve the pending device in the console,
 wait for password sync, then test normal ID + managed password login and reboot.
-See `ACCEPTANCE.md` for the Windows checks.
+See [ACCEPTANCE.md](ACCEPTANCE.md) for the Windows checks.
 
 This output is unsigned. A trusted Authenticode signature is a separate release
 step using your own signing certificate. The script does not suppress OS warnings.
-It produces an EXE and bundle ZIP, not an MSI. Optional upstream printer/USB virtual
+It produces one EXE; no bundle ZIP or MSI is generated. Optional upstream printer/USB virtual
 display driver packages and the custom upstream Flutter engine are not bundled by
 this script; those auxiliary features require the additional upstream release
 steps. Core desktop capture/input and managed access are the intended scope.

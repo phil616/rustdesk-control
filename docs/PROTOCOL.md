@@ -27,7 +27,10 @@ lowercase_hex_SHA256(raw_request_body)
 Query strings are rejected on signed endpoints. Enrollment additionally includes
 `timestamp`, `device_uuid` and `public_key` in its JSON, matching the headers.
 The public key is 32 bytes, standard Base64. The remaining enrollment metadata
-and heartbeat fields follow TASK.md. The exact raw JSON bytes are signed; JSON
+are `rustdesk_id`, `hostname`, `os`, `os_version`, `arch`,
+`rustdesk_version`, and `managed_client_version`. Heartbeat JSON contains
+`rustdesk_id`, `hostname`, `rustdesk_version`, `managed_client_version`,
+`policy_version`, and `password_version`. The exact raw JSON bytes are signed; JSON
 field ordering is not canonicalized by the server.
 
 Time skew is limited to ±300 seconds. Nonces are inserted transactionally into

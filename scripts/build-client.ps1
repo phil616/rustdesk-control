@@ -18,6 +18,8 @@ function Apply-Patch([string]$Directory, [string]$Patch) {
     if ($LASTEXITCODE -ne 0) { throw "Patch conflicts with local changes: $Patch" }
 }
 if ($env:OS -ne 'Windows_NT') { throw 'Run this script on Windows x64 in a Visual Studio Developer PowerShell.' }
+if (!$env:RUSTDESK_CONTROL_URL) { $env:RUSTDESK_CONTROL_URL = 'https://rustdesk-control.altasci.com' }
+if (!$env:RUSTDESK_MANAGED_SOURCE_URL) { $env:RUSTDESK_MANAGED_SOURCE_URL = 'https://github.com/phil616/rustdesk-control' }
 foreach ($name in @('RUSTDESK_CONTROL_URL','RUSTDESK_MANAGED_SOURCE_URL')) {
     $value = [Environment]::GetEnvironmentVariable($name)
     $uri = $null
@@ -69,9 +71,14 @@ try {
     Copy-Item 'target/release/deps/dylib_virtual_display.dll' $bundle -Force
     Copy-Item "$root/managed-client/NOTICE" $bundle -Force
     Copy-Item "$root/LICENSE" $bundle -Force
+    Copy-Item (Join-Path $client 'LICENCE') (Join-Path $bundle 'RUSTDESK-LICENCE') -Force
+    Run python @("$root/scripts/collect-notices.py", '--client', $client, '--vcpkg', $VcpkgRoot, '--output', (Join-Path $bundle 'THIRD-PARTY-NOTICES.txt'))
     foreach ($file in @('rustdesk.exe','librustdesk.dll','flutter_windows.dll','data/flutter_assets')) {
         if (!(Test-Path (Join-Path $bundle $file))) { throw "Incomplete Windows bundle: missing $file" }
     }
+    # Source and license files are inside the EXE payload, not separate release assets.
+    Run python @("$root/scripts/package-source.py", '--client', $client, '--output', (Join-Path $bundle 'corresponding-source.tar.gz'))
+    Copy-Item "$root/docs/LICENSING.md" (Join-Path $bundle 'SOURCE-CODE.md') -Force
     Push-Location libs/portable
     try {
         Run python @('-m','pip','install','-r','requirements.txt')
@@ -81,7 +88,6 @@ try {
     New-Item -ItemType Directory -Force $output | Out-Null
     $installer = Join-Path $output 'rustdesk-managed-1.4.9-x86_64-install.exe'
     Copy-Item 'target/release/rustdesk-portable-packer.exe' $installer -Force
-    Compress-Archive -Path "$bundle/*" -DestinationPath (Join-Path $output 'rustdesk-managed-1.4.9-x86_64-bundle.zip') -Force
     Get-FileHash $installer -Algorithm SHA256 | Format-List
     Write-Host "Complete unsigned Windows EXE: $installer"
     Write-Host 'Run it and use the normal RustDesk Install action (UAC is retained). Managed enrollment requires the installed service.'

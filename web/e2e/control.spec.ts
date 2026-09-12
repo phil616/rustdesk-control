@@ -10,14 +10,14 @@ test('management workflow and responsive layout',async({page})=>{
  await expect(page.getByRole('heading',{name:'fake-agent'})).toBeVisible();
  await expect(page.getByRole('button',{name:/Reveal Password$/})).toBeDisabled();
  await page.getByRole('button',{name:'Approve',exact:true}).click();
- await page.getByRole('button',{name:'OK',exact:true}).click();
+ await page.locator('.ant-popconfirm').filter({hasText:'Confirm Approve?'}).getByRole('button',{name:'OK',exact:true}).click();
  await expect(page.getByRole('button',{name:/Reveal Password$/})).toBeEnabled();
  await page.getByRole('button',{name:/Reveal Password$/}).click();
  await expect(page.getByRole('button',{name:'Copy Password',exact:true})).toBeEnabled();
  await page.getByRole('button',{name:'Hide',exact:true}).click();
  await expect(page.getByRole('button',{name:'Copy Password',exact:true})).toBeDisabled();
  await page.getByRole('button',{name:'Rotate Password',exact:true}).click();
- await page.getByRole('button',{name:'OK',exact:true}).click();
+ await page.locator('.ant-popconfirm').filter({hasText:'Confirm Rotate Password?'}).getByRole('button',{name:'OK',exact:true}).click();
  await page.getByRole('link',{name:'Settings',exact:true}).click();
  await page.getByLabel('ID Server',{exact:true}).fill('rustdesk.example.com');
  await page.getByLabel('Relay Server',{exact:true}).fill('relay.example.com');

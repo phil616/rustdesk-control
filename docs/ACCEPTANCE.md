@@ -1,10 +1,10 @@
-# Desktop acceptance runbook
+# Windows x64 客户端验收
 
 These are real-machine acceptance tests, not claims of completed validation.
 Record build hashes, OS version, device UUID, RustDesk ID, timing and audit IDs;
 never record a password or private key in the report.
 
-## Windows x86_64 and Debian/Ubuntu x86_64
+## Windows x86_64
 
 1. Build a signed/packaged modified 1.4.9 with the deployment's HTTPS control
    origin and the published corresponding source URL. Deploy official OSS
@@ -24,9 +24,8 @@ never record a password or private key in the report.
    and the old password no longer authenticates a new connection.
 8. Close the GUI; verify heartbeat continues. Restart the OS; repeat login and
    heartbeat verification without manually opening the GUI.
-9. On Linux test login screen -> user login -> logout -> another user login,
-   including service/session configuration synchronization and stable identity.
-   On Windows test locked screen and RDP session transitions.
+9. Test locked screen and RDP session transitions on Windows, including stable
+   service identity and configuration synchronization.
 10. Attempt overlapping RustDesk processes. Confirm only one effective agent uses
     the single service identity and the lock is released after process exit.
 

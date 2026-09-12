@@ -1,0 +1,8 @@
+rustdesk-control
+Project additions: Copyright (c) 2026 rustdesk-control contributors.
+Project additions are licensed under AGPL-3.0-only; see LICENSE.
+
+The modified Windows client is based on RustDesk OSS 1.4.9.
+It is not an official RustDesk distribution. Original copyright and license
+notices remain applicable. See managed-client/NOTICE and docs/LICENSING.md.
+Third-party components retain their respective licenses and copyrights.
