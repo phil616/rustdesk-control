@@ -11,6 +11,9 @@ Go 控制面内嵌中英文 React 管理界面，使用 SQLite；受管客户端
 | `rustdesk-control-linux-amd64` | Linux amd64 控制面 |
 | `rustdesk-managed-windows-amd64.exe` | Windows x64 受管客户端 |
 
+默认控制面地址为 `https://rustdesk-control.altasci.com`，源码仓库为
+`https://github.com/phil616/rustdesk-control`；Actions 无需配置变量即可使用这两个值。
+
 控制面与官方 OSS `hbbs/hbbr` 分开部署。客户端正常安装服务后自动注册，管理员批准后下发密码。
 
 - [文档目录](docs/README.md)

@@ -62,3 +62,26 @@ including English regression, Chinese workflow/persistence/form preservation,
 and disabled-storage fallback. Historical Windows/Linux control-plane executables were rebuilt
 with the updated embedded UI; Windows control-plane builds are no longer a release target. See `validation/i18n-tests.txt` and
 `validation/chinese-mobile.png`.
+
+## 文档与 tag 发布改造 — 2026-09-13
+
+本次发行范围固定为 Linux amd64 Go 控制面和 Windows x64 客户端 EXE。
+文档已集中到 docs/，移除旧任务草案及 Linux 客户端构建脚本。
+Actions 与本地 Windows 构建默认使用 `https://rustdesk-control.altasci.com` 和
+`https://github.com/phil616/rustdesk-control`，无需额外仓库变量。
+
+本地已完成：
+
+- `scripts/build.sh`：Linux amd64 控制面构建成功，内嵌最新中英文 UI、源码和许可证。
+- `go test -race ./...`、`go vet ./...`：通过；包括公开源码/许可下载与缺失文件 404 检查。
+- Playwright：3 项通过，覆盖英文操作、中文切换/偏好和禁用存储回退。
+- `scripts/test-release.py`：8 项通过，覆盖仅两个附件、正式版本禁止覆盖、草稿重试、
+  上传失败保留草稿、修改源码保留和编译缓存排除。GitHub 调用使用 mock，未实际发布。
+- actionlint 1.7.7：工作流静态检查通过（未启用 shellcheck）。
+- PowerShell 7.4 parser：Windows 构建脚本语法检查通过。
+- 实际源码包检查：含修改后的 RustDesk、hbb_common、管理模块、源码仓库及许可文件；
+  不含 Git 元数据、数据库、node_modules 或 Rust target 缓存。
+- 文档相对链接与 `git diff --check`：通过。
+
+尚未在 GitHub Windows runner 完整编译、打包或执行 EXE；未实际推送 tag 或创建 Release。
+Windows 安装、重启、真实连接及完整第三方分发合规核查仍须完成，不以静态检查代替。
