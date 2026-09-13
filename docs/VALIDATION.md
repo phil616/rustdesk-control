@@ -85,3 +85,19 @@ Actions 与本地 Windows 构建默认使用 `https://rustdesk-control.altasci.c
 
 尚未在 GitHub Windows runner 完整编译、打包或执行 EXE；未实际推送 tag 或创建 Release。
 Windows 安装、重启、真实连接及完整第三方分发合规核查仍须完成，不以静态检查代替。
+
+## GitHub Actions failure diagnosis — 2026-09-13
+
+- [Run 34728009144](https://github.com/phil616/rustdesk-control/actions/runs/34728009144):
+  Windows dependency preparation failed because Visual Studio overwrote `VCPKG_ROOT`
+  with its bundled, nonempty vcpkg directory. The workflow now uses a dedicated
+  `RDC_VCPKG_ROOT` and passes that path explicitly to the build script.
+- [Run 34702651109](https://github.com/phil616/rustdesk-control/actions/runs/34702651109):
+  the Linux job passed; the Windows Rust release library and Flutter EXE both
+  compiled successfully. Packaging then failed because `dylib_virtual_display.dll`
+  had not been built. The script now builds the separate workspace member and
+  checks/copies its DLL into the bundle.
+- After these fixes, actionlint, PowerShell syntax validation, the pinned upstream
+  DLL target check and all eight offline release tests passed locally.
+  A fresh tag containing these changes is still needed to validate the entire
+  GitHub packaging/release flow. Re-running an old run uses the old commit.

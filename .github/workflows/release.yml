@@ -78,7 +78,8 @@ jobs:
     env:
       RUSTDESK_CONTROL_URL: ${{ vars.RUSTDESK_CONTROL_URL || 'https://rustdesk-control.altasci.com' }}
       RUSTDESK_MANAGED_SOURCE_URL: ${{ needs.validate.outputs.source-url }}
-      VCPKG_ROOT: C:\rdc-vcpkg
+      # VS developer-shell setup overwrites VCPKG_ROOT. Keep our checkout separate.
+      RDC_VCPKG_ROOT: C:\rdc-vcpkg
     steps:
       - uses: actions/checkout@v4
         with:
@@ -104,16 +105,16 @@ jobs:
           choco install nasm --yes --no-progress
           if ($LASTEXITCODE -ne 0) { throw 'NASM installation failed' }
           'C:\Program Files\NASM' >> $env:GITHUB_PATH
-          git clone https://github.com/microsoft/vcpkg.git $env:VCPKG_ROOT
+          git clone https://github.com/microsoft/vcpkg.git $env:RDC_VCPKG_ROOT
           if ($LASTEXITCODE -ne 0) { throw 'vcpkg clone failed' }
-          git -C $env:VCPKG_ROOT checkout 120deac3062162151622ca4860575a33844ba10b
+          git -C $env:RDC_VCPKG_ROOT checkout 120deac3062162151622ca4860575a33844ba10b
           if ($LASTEXITCODE -ne 0) { throw 'vcpkg checkout failed' }
-          & "$env:VCPKG_ROOT\bootstrap-vcpkg.bat" -disableMetrics
+          & "$env:RDC_VCPKG_ROOT\bootstrap-vcpkg.bat" -disableMetrics
           if ($LASTEXITCODE -ne 0) { throw 'vcpkg bootstrap failed' }
       - name: Build Windows x64 managed EXE
         shell: pwsh
         run: |
-          ./scripts/build-client.ps1 -VcpkgRoot $env:VCPKG_ROOT
+          ./scripts/build-client.ps1 -VcpkgRoot $env:RDC_VCPKG_ROOT
           New-Item -ItemType Directory -Force dist/release | Out-Null
           Copy-Item dist/windows-x64/rustdesk-managed-1.4.9-x86_64-install.exe dist/release/rustdesk-managed-windows-amd64.exe
       - uses: actions/upload-artifact@v4

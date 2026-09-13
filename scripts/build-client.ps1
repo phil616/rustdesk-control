@@ -64,16 +64,21 @@ try {
     try { Run flutter @('config','--enable-windows-desktop'); Run flutter @('pub','get') } finally { Pop-Location }
     # Always regenerate: an old bridge must not survive an FFI change.
     Run flutter_rust_bridge_codegen @('--rust-input','./src/flutter_ffi.rs','--dart-output','./flutter/lib/generated_bridge.dart','--c-output','./flutter/macos/Runner/bridge_generated.h')
+    # Upstream build.py builds this workspace member separately; --lib on
+    # rustdesk does not produce the DLL needed by the Windows bundle.
+    Run cargo @('build','--locked','--release','--package','dylib_virtual_display')
+    $virtualDisplayDll = Join-Path $client 'target/release/dylib_virtual_display.dll'
+    if (!(Test-Path $virtualDisplayDll)) { throw 'Virtual display DLL build did not produce its required output' }
     Run cargo @('build','--locked','--release','--lib','--features','managed-control,flutter,hwcodec')
     Push-Location flutter
     try { Run flutter @('build','windows','--release') } finally { Pop-Location }
     $bundle = Join-Path $client 'flutter/build/windows/x64/runner/Release'
-    Copy-Item 'target/release/deps/dylib_virtual_display.dll' $bundle -Force
+    Copy-Item $virtualDisplayDll $bundle -Force
     Copy-Item "$root/managed-client/NOTICE" $bundle -Force
     Copy-Item "$root/LICENSE" $bundle -Force
     Copy-Item (Join-Path $client 'LICENCE') (Join-Path $bundle 'RUSTDESK-LICENCE') -Force
     Run python @("$root/scripts/collect-notices.py", '--client', $client, '--vcpkg', $VcpkgRoot, '--output', (Join-Path $bundle 'THIRD-PARTY-NOTICES.txt'))
-    foreach ($file in @('rustdesk.exe','librustdesk.dll','flutter_windows.dll','data/flutter_assets')) {
+    foreach ($file in @('rustdesk.exe','librustdesk.dll','flutter_windows.dll','dylib_virtual_display.dll','data/flutter_assets')) {
         if (!(Test-Path (Join-Path $bundle $file))) { throw "Incomplete Windows bundle: missing $file" }
     }
     # Source and license files are inside the EXE payload, not separate release assets.

@@ -98,3 +98,15 @@ steps. Core desktop capture/input and managed access are the intended scope.
 - Rust DLL built but no EXE: Flutter or packer failed; the DLL alone is not a client.
 - No pending device: check normal installation/service status, the compiled HTTPS
   origin, valid control TLS certificate and saved server policy.
+
+## GitHub runner dependency preparation
+
+The workflow keeps its pinned checkout in `RDC_VCPKG_ROOT=C:\rdc-vcpkg`.
+Visual Studio developer-shell setup exports its own `VCPKG_ROOT`; it must not
+be used as the clone destination. The build script receives `-VcpkgRoot`
+explicitly and sets `VCPKG_ROOT` for Cargo/native dependency discovery afterward.
+
+`dylib_virtual_display` is a separate Cargo workspace member. The script builds
+it explicitly before the main Rust library and Flutter app, verifies the DLL,
+and includes it in the EXE bundle. Building only the root RustDesk `--lib`
+does not produce this required DLL.
